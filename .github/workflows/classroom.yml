@@ -19,6 +19,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Install pytest once for the next graders
+      - name: Install pytest
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install pytest
+
       # ---- Grader 1: compile tests ----
       - name: Compile tests
         id: compile
@@ -29,12 +35,6 @@ jobs:
           timeout: 30
           max-score: 10
 
-      # Install pytest once for the next graders
-      - name: Install pytest
-        run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install pytest
-
       # ---- Grader 3: pytest -m basic (4 pts) ----
       - name: Basic tests
         id: basic
@@ -43,7 +43,7 @@ jobs:
           test-name: "Basic tests"
           command: pytest -rP -m basic
           timeout: 10
-          max-score: 10
+          max-score: 30
 
       # ---- Grader 4: pytest -m edge (2 pts) ----
       - name: Edge tests
@@ -53,7 +53,7 @@ jobs:
           test-name: "Edge tests"
           command: pytest -rP -m edge
           timeout: 10
-          max-score: 10
+          max-score: 30
 
       # ---- Optional: Bonus tests  ----
       - name: Bonus tests 
@@ -63,7 +63,7 @@ jobs:
           test-name: "Bonus tests"
           command: pytest -rP -m bonus
           timeout: 10
-          max-score: 10
+          max-score: 30
 
       # ---- Reporter: show score on Classroom ----
       - name: Autograding Reporter
